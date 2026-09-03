@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HealthLens AI - Hackathon Pitch Deck</title>
+  <style>
+    :root {
+      --bg-primary: #0a0f1d;
+      --bg-card: #131c31;
+      --accent-teal: #00d4b2;
+      --accent-blue: #3b82f6;
+      --accent-coral: #ff6b6b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(19, 28, 49, 0.7);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand span {
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-counter {
+      color: var(--accent-teal);
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: rgba(0, 212, 178, 0.1);
+      padding: 4px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 212, 178, 0.2);
+    }
+
+    .presentation-container {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 90%;
+      max-width: 1200px;
+      height: 82vh;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .slide-header {
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent-teal);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    p.lead {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      max-width: 800px;
+      line-height: 1.5;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      width: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card.highlight {
+      border-color: rgba(0, 212, 178, 0.4);
+      background: rgba(0, 212, 178, 0.03);
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      color: var(--accent-teal);
+    }
+
+    .card p, .card ul {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .card ul {
+      list-style-position: inside;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .metric {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent-teal);
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .slide-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    button.btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    button.btn:hover {
+      background: rgba(0, 212, 178, 0.15);
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      🩺 <span>HealthLens AI</span>
+    </div>
+    <div class="slide-counter" id="counter">Slide 1 / 10</div>
+    <div class="controls">
+      <button class="btn" onclick="prevSlide()">← Previous</button>
+      <button class="btn" onclick="nextSlide()">Next →</button>
+    </div>
+  </header>
+
+  <div class="presentation-container">
+
+    <!-- Slide 1: Title -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-header">
+        <span class="badge">Hackathon Presentation</span>
+        <h1>HealthLens AI</h1>
+        <p class="lead">Multimodal Preventive Health Screening & Explainable Clinical Intelligence</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card highlight">
+            <h3>Turning Paperwork into Prevention</h3>
+            <p>A multimodal clinical platform that ingests unstructured medical reports (PDF, DOCX, Photos), extracts 21 key clinical parameters, and computes calibrated chronic disease risk powered by machine learning on 250,000+ CDC patient records.</p>
+            <div class="pill-list">
+              <span class="pill">Next.js 16</span>
+              <span class="pill">FastAPI</span>
+              <span class="pill">HistGradientBoosting</span>
+              <span class="pill">Isotonic Calibration</span>
+              <span class="pill">Docker</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Team HealthLens AI</h3>
+            <p><strong>Primary Goal:</strong> Early asymptomatic detection before irreversible organ complications.</p>
+            <p><strong>Repository:</strong> https://github.com/shayan123-svg/Health-Lens-AI.git</p>
+            <p><strong>Deployment:</strong> Single-command Docker Compose</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Use Arrow Keys (← / →) or Buttons to Navigate</span>
+        <span>Slide 1 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 2: Problem -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <span class="badge">Pillar 1: The Problem</span>
+        <h2>The Silent Epidemic & The Paperwork Chasm</h2>
+        <p class="lead">Chronic disease progression remains invisible until acute symptoms trigger hospital visits.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card">
+            <div class="metric">537M+</div>
+            <div class="metric-label">Adults Worldwide with Diabetes</div>
+            <p>Over 1 in 3 adults have prediabetes, yet more than 80% have no idea they are at risk.</p>
+          </div>
+          <div class="card">
+            <div class="metric">5-10 yrs</div>
+            <div class="metric-label">Asymptomatic Incubation Lag</div>
+            <p>Metabolic dysfunction silently destroys microvasculature years before blood tests flag traditional alerts.</p>
+          </div>
+          <div class="card">
+            <div class="metric">15 Mins</div>
+            <div class="metric-label">Average Doctor Visit Duration</div>
+            <p>Clinicians lack time to aggregate 20+ lifestyle, metabolic, and lab factors from messy photocopied reports.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Who it affects: 96M+ at-risk adults, underserved communities, and burnt-out healthcare workers.</span>
+        <span>Slide 2 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 3: Solution -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <span class="badge">Pillar 2: The Solution</span>
+        <h2>HealthLens AI: Unified Preventive Intelligence</h2>
+        <p class="lead">Converting unstructured documents into calibrated clinical risk profiles and actionable steps.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card">
+            <h3>1. Multimodal Capture</h3>
+            <p>Patients or nurses take a photo or upload PDF/DOCX files. Vision LLMs and regex automatically transcribe and extract 21 clinical indicators.</p>
+          </div>
+          <div class="card highlight">
+            <h3>2. Calibrated ML Engine</h3>
+            <p>Trained on CDC BRFSS epidemiological data and calibrated with Isotonic Regression to provide true empirical probabilities.</p>
+          </div>
+          <div class="card">
+            <h3>3. Grounded AI Assistant</h3>
+            <p>Answers patient questions grounded in verified lab context with zero medical jargon and clear lifestyle interventions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Target Audiences: Proactive Individuals, Primary Care Clinicians, Corporate Health Plans</span>
+        <span>Slide 3 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 4: Need & Impact -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <span class="badge">Pillar 3: Need & Impact</span>
+        <h2>High Clinical Need, Transformative Impact</h2>
+        <p class="lead">Catching prediabetes early halts progression and averts catastrophic costs.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card highlight">
+            <div class="metric">58%</div>
+            <div class="metric-label">Risk Reduction via Early Lifestyle Changes</div>
+            <p>CDC Diabetes Prevention Program clinical trials prove prediabetes is reversible with targeted guidance.</p>
+          </div>
+          <div class="card">
+            <div class="metric">$16.7k</div>
+            <div class="metric-label">Average Annual Cost per Diabetic Patient</div>
+            <p>Preventing progression saves families and healthcare payers over $14,000 per patient every year.</p>
+          </div>
+          <div class="card">
+            <div class="metric">100%</div>
+            <div class="metric-label">Health Literacy Democratization</div>
+            <p>Transforms cryptic clinical jargon into transparent, color-coded risk factors anyone can act on.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Impact: Proactive, preventative healthcare replaces reactive, costly emergency interventions.</span>
+        <span>Slide 4 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 5: Innovation -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <span class="badge">Pillar 4: Innovation</span>
+        <h2>Deep Technology & System Architecture</h2>
+        <p class="lead">A modular full-stack application connecting state-of-the-art AI to clinical data science.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Frontend & Experience Layer</h3>
+            <ul>
+              <li><strong>Next.js 16 App Router</strong> with React 19 Server Components</li>
+              <li><strong>Tailwind CSS v4</strong> with dark mode and high accessibility contrast</li>
+              <li><strong>Recharts</strong> dynamic SVG risk gauges and impact bars</li>
+              <li><strong>Clerk</strong> secure JWT identity and session handling</li>
+            </ul>
+          </div>
+          <div class="card highlight">
+            <h3>Backend & AI Engine</h3>
+            <ul>
+              <li><strong>FastAPI</strong> asynchronous Python REST API</li>
+              <li><strong>Multimodal Ingestion:</strong> PyPDF, python-docx, OpenRouter Vision</li>
+              <li><strong>Scikit-Learn ML:</strong> HistGradientBoosting + Isotonic calibrator</li>
+              <li><strong>Counterfactual XAI:</strong> Finite-difference baseline attribution</li>
+              <li><strong>Supabase:</strong> PostgreSQL persistence with Row-Level Security</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Orchestration: Single-command Docker Compose for zero-friction local or cloud deployment.</span>
+        <span>Slide 5 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 6: Machine Learning Details -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <span class="badge">Clinical Data Science</span>
+        <h2>CDC Validated Machine Learning & Calibration</h2>
+        <p class="lead">Why raw AI predictions fail in healthcare, and how calibration fixes them.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Cohort & Model Specifics</h3>
+            <ul>
+              <li><strong>CDC BRFSS Dataset:</strong> 253,680 adult patients, 21 clinical indicators.</li>
+              <li><strong>Model:</strong> HistGradientBoosting with non-linear interaction learning.</li>
+              <li><strong>External Validation:</strong> Independently tested on BRFSS 2021 cohort to ensure no temporal drift.</li>
+              <li><strong>Preventive Threshold:</strong> 0.24 tuned for 80%+ recall to prevent dangerous false negatives.</li>
+            </ul>
+          </div>
+          <div class="card highlight">
+            <h3>Isotonic Probability Calibration</h3>
+            <p>Raw machine learning classifiers suffer from uncalibrated probabilities. We train an <strong>Isotonic Regression</strong> mapping so that:</p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-family: monospace; color: var(--accent-teal);">
+              Predicted Risk 30% == 30 True Cases per 100 Patients
+            </div>
+            <p style="margin-top: 10px;">Ensures numbers shown to patients and clinicians reflect real statistical probability.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Screening Priority: Tuned to maximize sensitivity and catch at-risk patients early.</span>
+        <span>Slide 6 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 7: Explainable AI -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header">
+        <span class="badge">Patient Transparency</span>
+        <h2>Explainable AI: Counterfactual Risk Attribution</h2>
+        <p class="lead">Moving beyond black-box scores into actionable, personalized drivers.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <h3>The Finite-Difference Engine</h3>
+            <p>We compare the patient's risk against a calibrated neutral baseline:</p>
+            <div style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; font-family: monospace; color: var(--accent-teal);">
+              ΔRisk = P(User Features) - P(User with Baseline Feature)
+            </div>
+            <p>Identifies precisely how much each biomarker raises or reduces total risk.</p>
+          </div>
+          <div class="card highlight">
+            <h3>Example Individualized Breakdown</h3>
+            <ul>
+              <li><strong style="color: #ff6b6b;">High Blood Pressure:</strong> +11.4% risk increase</li>
+              <li><strong style="color: #ff6b6b;">BMI of 31.2:</strong> +8.2% risk increase</li>
+              <li><strong style="color: #00d4b2;">Daily Vegetable Intake:</strong> -2.1% risk reduction</li>
+              <li><strong style="color: #00d4b2;">Active Exercise:</strong> -3.5% risk reduction (protective)</li>
+            </ul>
+            <p style="font-weight: 600; color: var(--text-main);">Shows patients what to change to see real risk reduction!</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Global SHAP Insights: Top predictive factors are General Health, Blood Pressure, Age, BMI, and Cholesterol.</span>
+        <span>Slide 7 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 8: Feasibility & What Was Built -->
+    <div class="slide" id="slide-8">
+      <div class="slide-header">
+        <span class="badge">Pillar 5: Feasibility & Live System</span>
+        <h2>What Has Actually Been Built</h2>
+        <p class="lead">A complete, fully functional, production-ready system ready for live demonstration.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card highlight">
+            <h3>Full-Stack Web Portal</h3>
+            <p>Interactive Next.js 16 portal with file upload, real-time extraction review, interactive risk gauges, and report archives.</p>
+          </div>
+          <div class="card highlight">
+            <h3>Multimodal Pipeline</h3>
+            <p>Real-world extraction from scanned PDF lab tests, Word documents, and smartphone photos of medical lab sheets.</p>
+          </div>
+          <div class="card highlight">
+            <h3>Containerized Deployment</h3>
+            <p>Both frontend and backend orchestrate cleanly in Docker Compose with a single command: <code>docker compose up --build</code></p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Feasibility: Operational code, serialized models, typed APIs, ready for clinical pilot deployment.</span>
+        <span>Slide 8 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 9: Commercial Roadmap -->
+    <div class="slide" id="slide-9">
+      <div class="slide-header">
+        <span class="badge">Future Horizons</span>
+        <h2>Scalability & Commercial Roadmap</h2>
+        <p class="lead">From chronic disease screening to comprehensive multi-system health intelligence.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card">
+            <h3>Phase 1: B2C Wellness</h3>
+            <p>Freemium patient screening tier with longitudinal lifestyle tracking and dietary coaching integration.</p>
+          </div>
+          <div class="card highlight">
+            <h3>Phase 2: B2B Clinics</h3>
+            <p>EHR integration (FHIR / HL7) allowing medical clinics to pre-screen patient charts before annual physicals.</p>
+          </div>
+          <div class="card">
+            <h3>Phase 3: Multi-Task Models</h3>
+            <p>Expand beyond diabetes to screen for cardiovascular disease, hypertension, and chronic kidney disease.</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>Scalability: Stateless inference engine scales horizontally to millions of screenings.</span>
+        <span>Slide 9 of 10</span>
+      </div>
+    </div>
+
+    <!-- Slide 10: Conclusion -->
+    <div class="slide" id="slide-10">
+      <div class="slide-header">
+        <span class="badge">Conclusion</span>
+        <h2>Prevention is the Best Cure</h2>
+        <p class="lead">HealthLens AI empowers everyone with the clarity to catch disease in time.</p>
+      </div>
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card highlight">
+            <h3>Summary Highlights</h3>
+            <ul>
+              <li>Proven Machine Learning on 250k+ CDC patient records</li>
+              <li>Calibrated probabilities with Isotonic Regression</li>
+              <li>Multimodal ingestion of messy real-world medical documents</li>
+              <li>Actionable counterfactual feature attribution</li>
+              <li>Single-command Docker containerization</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Ready for Exploration</h3>
+            <p><strong>GitHub:</strong> <br/><a href="https://github.com/shayan123-svg/Health-Lens-AI.git" style="color: var(--accent-teal);">https://github.com/shayan123-svg/Health-Lens-AI.git</a></p>
+            <p style="margin-top: 15px;"><strong>Run Command:</strong> <br/><code>docker compose up --build</code></p>
+            <p style="margin-top: 15px; font-size: 1.1rem; color: var(--text-main);"><strong>Thank you! We welcome your questions.</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>HealthLens AI - Hackathon 2026</span>
+        <span>Slide 10 of 10</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 10;
+
+    function updateSlide() {
+      document.querySelectorAll('.slide').forEach((el, index) => {
+        el.classList.toggle('active', index + 1 === currentSlide);
+      });
+      document.getElementById('counter').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# FastAPI Backend & Server
+fastapi
+uvicorn[standard]
+gunicorn
+python-multipart
+
+# Document & Image Processing
+python-docx
+pypdf
+pillow
+
+# Machine Learning & Model Inference
+scikit-learn
+pandas
+numpy
+joblib
+
+# Model Explainability
+shap
+
+# Data Validation
+pydantic[email]
+
+# Supabase persistence + Authentication
+supabase
+PyJWT[crypto]
+
+# Environment Variables
+python-dotenv

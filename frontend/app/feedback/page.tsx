@@ -1,0 +1,2 @@
+import { MarketingNav } from "@/components/marketing"; import { ReviewForm } from "@/components/review-form";
+export default function Feedback(){return <main><MarketingNav/><section className="wrap section" style={{maxWidth:760}}><p className="eyebrow">Share feedback</p><h1 className="page-title">How was your experience?</h1><p className="lede">Feedback is reviewed before it appears publicly.</p><ReviewForm/></section></main>}

@@ -1,0 +1,37 @@
+# Git & Documentation
+.git
+.github
+Docs
+*.md
+*.pptx
+
+# Node & Next.js build caches
+**/node_modules
+**/.next
+**/out
+**/build
+**/dist
+**/*.tsbuildinfo
+
+# Python virtual environments & bytecode
+**/.venv
+**/env
+**/venv
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.pytest_cache
+
+# Local environment files with secrets
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Temp uploads & OS files
+Backend/uploads/*
+!Backend/uploads/.gitkeep
+.DS_Store
+Thumbs.db
+.vscode
+.idea

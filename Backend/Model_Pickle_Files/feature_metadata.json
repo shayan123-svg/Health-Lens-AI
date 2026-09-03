@@ -1,0 +1,137 @@
+{
+  "HighBP": {
+    "display_name": "High Blood Pressure",
+    "type": "boolean",
+    "description": "Have you ever been told that you have high blood pressure?"
+  },
+  "HighChol": {
+    "display_name": "High Cholesterol",
+    "type": "boolean"
+  },
+  "CholCheck": {
+    "display_name": "Cholesterol Check",
+    "type": "boolean"
+  },
+  "BMI": {
+    "display_name": "Body Mass Index",
+    "type": "numeric",
+    "min": 10,
+    "max": 100
+  },
+  "Smoker": {
+    "display_name": "Smoker",
+    "type": "boolean"
+  },
+  "Stroke": {
+    "display_name": "History of Stroke",
+    "type": "boolean"
+  },
+  "HeartDiseaseorAttack": {
+    "display_name": "Heart Disease or Heart Attack",
+    "type": "boolean"
+  },
+  "PhysActivity": {
+    "display_name": "Physical Activity",
+    "type": "boolean"
+  },
+  "Fruits": {
+    "display_name": "Fruit Consumption",
+    "type": "boolean"
+  },
+  "Veggies": {
+    "display_name": "Vegetable Consumption",
+    "type": "boolean"
+  },
+  "HvyAlcoholConsump": {
+    "display_name": "Heavy Alcohol Consumption",
+    "type": "boolean"
+  },
+  "AnyHealthcare": {
+    "display_name": "Healthcare Coverage",
+    "type": "boolean"
+  },
+  "NoDocbcCost": {
+    "display_name": "Unable to See Doctor Due to Cost",
+    "type": "boolean"
+  },
+  "GenHlth": {
+    "display_name": "General Health",
+    "type": "categorical",
+    "mapping": {
+      "Excellent": 1,
+      "Very Good": 2,
+      "Good": 3,
+      "Fair": 4,
+      "Poor": 5
+    }
+  },
+  "MentHlth": {
+    "display_name": "Mental Health Days",
+    "type": "numeric",
+    "min": 0,
+    "max": 30
+  },
+  "PhysHlth": {
+    "display_name": "Physical Health Days",
+    "type": "numeric",
+    "min": 0,
+    "max": 30
+  },
+  "DiffWalk": {
+    "display_name": "Difficulty Walking",
+    "type": "boolean"
+  },
+  "Sex": {
+    "display_name": "Sex",
+    "type": "categorical",
+    "mapping": {
+      "Female": 0,
+      "Male": 1
+    }
+  },
+  "Age": {
+    "display_name": "Age Group",
+    "type": "categorical",
+    "mapping": {
+      "18-24": 1,
+      "25-29": 2,
+      "30-34": 3,
+      "35-39": 4,
+      "40-44": 5,
+      "45-49": 6,
+      "50-54": 7,
+      "55-59": 8,
+      "60-64": 9,
+      "65-69": 10,
+      "70-74": 11,
+      "75-79": 12,
+      "80+": 13
+    }
+  },
+  "Education": {
+    "display_name": "Education Level",
+    "type": "categorical",
+    "mapping": {
+      "Never attended school or kindergarten only": 1,
+      "Elementary school": 2,
+      "Some high school": 3,
+      "High school graduate": 4,
+      "Some college or technical school": 5,
+      "College graduate": 6
+    }
+  },
+  "Income": {
+    "display_name": "Income Level",
+    "type": "categorical",
+    "mapping": {
+      "Less than $10,000": 1,
+      "$10,000-$14,999": 2,
+      "$15,000-$19,999": 3,
+      "$20,000-$24,999": 4,
+      "$25,000-$34,999": 5,
+      "$35,000-$49,999": 6,
+      "$50,000-$74,999": 7,
+      "$75,000 or more": 8
+    }
+  }
+}

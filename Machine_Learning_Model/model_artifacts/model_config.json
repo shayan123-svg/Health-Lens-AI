@@ -1,0 +1,9 @@
+{
+    "model_name": "HistGradientBoostingClassifier",
+    "calibration": "Isotonic",
+    "screening_threshold": 0.24,
+    "target": "Diabetes_binary",
+    "model_version": "1.0",
+    "training_dataset": "BRFSS 2015",
+    "external_validation_dataset": "BRFSS 2021"
+}

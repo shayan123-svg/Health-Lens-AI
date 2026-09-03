@@ -1,0 +1,81 @@
+# ==========================================================
+# HealthLens AI - Unified Multi-Container Docker Compose
+# ==========================================================
+# Run everything with a single command:
+#   docker compose up --build
+#
+# Services:
+#   - backend:  FastAPI + Scikit-Learn ML Model + Vision LLM (Port 8000)
+#   - frontend: Next.js 16 + React 19 App Router UI (Port 3000)
+# ==========================================================
+
+services:
+  # --------------------------------------------------------
+  # 1. Python FastAPI Backend Service
+  # --------------------------------------------------------
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: healthlens-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+      - SUPABASE_URL=${SUPABASE_URL:-}
+      - SUPABASE_KEY=${SUPABASE_KEY:-}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY:-}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - OPENROUTER_BASE_URL=${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1/chat/completions}
+      - LLM_MODEL=${LLM_MODEL:-openrouter/free}
+      - CLERK_ISSUER=${CLERK_ISSUER:-}
+    env_file:
+      - path: ./Backend/.env
+        required: false
+    volumes:
+      - ./Backend/uploads:/app/uploads
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - healthlens-network
+
+  # --------------------------------------------------------
+  # 2. Next.js Frontend Service
+  # --------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=http://localhost:8000
+        - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-}
+    container_name: healthlens-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-}
+      - PORT=3000
+    env_file:
+      - path: ./frontend/.env.local
+        required: false
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - healthlens-network
+
+# ----------------------------------------------------------
+# Isolated Bridge Network
+# ----------------------------------------------------------
+networks:
+  healthlens-network:
+    name: healthlens-network
+    driver: bridge

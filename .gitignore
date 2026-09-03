@@ -1,0 +1,54 @@
+# ==========================================
+# HealthLens AI - Root .gitignore
+# ==========================================
+
+# Dependencies & Build artifacts
+**/node_modules/
+**/.next/
+**/out/
+**/build/
+**/dist/
+**/*.tsbuildinfo
+next-env.d.ts
+bun.lockb
+
+# Python & Virtual Environments
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+**/.venv/
+**/venv/
+**/env/
+**/ENV/
+**/.pytest_cache/
+**/*.egg-info/
+
+# Environment variables & secrets — NEVER commit
+**/.env
+**/.env.local
+**/.env.*.local
+Backend/.env
+frontend/.env.local
+
+# Allow example config templates
+!.env.example
+!frontend/.env.example
+!Backend/.env.example
+
+# Local Uploads
+Backend/uploads/*
+!Backend/uploads/.gitkeep
+
+# IDE & Operating System
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Cloud / Vercel
+.vercel/

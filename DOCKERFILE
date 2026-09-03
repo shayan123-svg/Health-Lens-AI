@@ -1,0 +1,71 @@
+# ==========================================================
+# HealthLens AI - All-in-One Unified Dockerfile
+# ==========================================================
+# Runs both FastAPI Backend (port 8000) and Next.js Frontend (port 3000)
+# Recommended single-command alternative: docker compose up --build
+# ==========================================================
+
+# Stage 1: Build Frontend
+FROM node:20-alpine AS frontend-builder
+WORKDIR /app/frontend
+
+COPY frontend/package.json frontend/bun.lock* frontend/package-lock.json* ./
+RUN npm install -g bun && (bun install --frozen-lockfile || npm install)
+
+COPY frontend/ ./
+ARG NEXT_PUBLIC_API_URL=http://localhost:8000
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} \
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY} \
+    NEXT_TELEMETRY_DISABLED=1
+
+RUN npm run build || (bun run build)
+
+# Stage 2: Unified Runtime with Python 3.11 and Node.js
+FROM python:3.11-slim AS runner
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    NODE_ENV=production \
+    PORT=8000
+
+WORKDIR /app
+
+# Install Node.js 20, curl, and procps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    build-essential \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python backend dependencies
+COPY Backend/requirements.txt ./backend/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r ./backend/requirements.txt
+
+# Copy Backend files
+COPY Backend/app ./backend/app
+COPY Backend/Model_Pickle_Files ./backend/Model_Pickle_Files
+COPY Backend/uploads ./backend/uploads
+
+# Copy Frontend build from stage 1
+COPY --from=frontend-builder /app/frontend/package.json ./frontend/package.json
+COPY --from=frontend-builder /app/frontend/node_modules ./frontend/node_modules
+COPY --from=frontend-builder /app/frontend/public ./frontend/public
+COPY --from=frontend-builder /app/frontend/.next ./frontend/.next
+
+# Startup script to run both services
+RUN echo '#!/bin/sh' > /app/entrypoint.sh && \
+    echo 'echo "Starting HealthLens Backend on port 8000..."' >> /app/entrypoint.sh && \
+    echo 'cd /app/backend && uvicorn app.main:app --host 0.0.0.0 --port 8000 &' >> /app/entrypoint.sh && \
+    echo 'echo "Starting HealthLens Frontend on port 3000..."' >> /app/entrypoint.sh && \
+    echo 'cd /app/frontend && npm run start -- -p 3000' >> /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
+
+EXPOSE 3000 8000
+
+HEALTHCHECK --interval=25s --timeout=5s --start-period=15s --retries=3 \
+  CMD curl -f http://localhost:8000/health && curl -f http://localhost:3000 || exit 1
+
+CMD ["/app/entrypoint.sh"]

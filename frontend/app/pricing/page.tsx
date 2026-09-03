@@ -1,0 +1,2 @@
+import { MarketingNav } from "@/components/marketing"; import { PricingCards } from "@/components/interactive-pages";
+export default function Pricing(){return <main><MarketingNav/><section className="wrap section" style={{maxWidth:920}}><p className="eyebrow">Plans that leave room to grow</p><h1 className="page-title" style={{fontSize:"clamp(3rem,6vw,5.2rem)"}}>Choose the context you need.</h1><p className="lede">Start with the sample workspace. Payment and subscription features are not connected in this frontend prototype.</p><PricingCards/></section></main>}
