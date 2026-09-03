@@ -9,7 +9,6 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json bun.lock* package-lock.json* ./
-# Install dependencies using bun or npm
 RUN if [ -f bun.lock ]; then \
       npm install -g bun && bun install --frozen-lockfile; \
     else \
@@ -28,7 +27,7 @@ ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} \
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY} \
     NEXT_TELEMETRY_DISABLED=1
 
-RUN npm run build || (npm install -g bun && bun run build)
+RUN npm run build
 
 # Step 3: Production runtime image
 FROM base AS runner

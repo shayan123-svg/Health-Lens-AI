@@ -9,7 +9,7 @@ const RISK_COLORS: Record<string, string> = {
   "very high": "#DC2626",
 };
 
-function formatValue(value: string | number | boolean | undefined): string {
+function formatValue(value: string | number | boolean | null | undefined): string {
   if (value === undefined || value === null || value === "") return "—";
   if (typeof value === "boolean") return value ? "Yes" : "No";
   return String(value);
