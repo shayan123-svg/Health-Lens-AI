@@ -1,23 +1,24 @@
+# ==========================================================
+# HealthLens AI - Render Blueprint Deployment
+# Deploys BOTH Frontend & Backend in ONE single Docker Web Service
+# ==========================================================
+
 services:
   - type: web
-    name: healthlens-api
-    env: python
-    rootDir: Backend
+    name: healthlens-ai
+    env: docker
+    dockerfilePath: ./DOCKERFILE
     region: oregon
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.9
+      - key: OPENROUTER_API_KEY
+        sync: false
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_KEY
         sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
-      - key: OPENROUTER_API_KEY
-        sync: false
-      - key: ALLOWED_ORIGINS
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
         sync: false
